@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Homework</title>
+</head>
+<body>
+    <script defer src="./scripts/index.js"></script>
+    <div class="container">
+        <h1 class="container__title">Homework №5</h1>
+        <form class="container__form">
+            <h2 class="tasks__title">Работа с функциями:</h2>
+            <fieldset>
+                <div id="task_1" class="task">
+                    <legend class="task__condition">
+                        Запросить у пользователя два числа, n и m - вывести все числа в 
+                        диапазоне между ними.
+                    </legend>
+    
+                    <div class="task__input">
+                        <input type="text">
+                        <input type="text">
+                        <button type="button" onclick="task_0()">click</button>
+                    </div>
+    
+                    <textarea class="task__result" name="" id="" cols="30" rows="10" disabled></textarea>
+                </div>
+                <div id="task_2" class="task">
+                    <legend class="task__condition">
+                        Запросить у пользователя два числа, написать функцию при помощи 
+                        стрелочного синтаксиса и аналог с function expression которая бы 
+                        возводила первое число в степень второго введенного числа, или в 
+                        степень 2 по умолчанию.
+                    </legend>
+    
+                    <div class="task__input">
+                        <input type="text">
+                        <input type="text">
+                        <button type="button"  onclick="task_1()">click</button>
+                    </div>
+    
+                    <textarea class="task__result" name="" id="" cols="30" rows="10" disabled></textarea>
+                </div>
+            </fieldset>
+            <h2 class="tasks__title">Работа с Number:</h2>
+            <fieldset>
+                <div id="task_3" class="task">
+                    <legend class="task__condition">
+                        Запросить у пользователя два числа с плавающей точкой - умножить 
+                        на 0.3 и округлить до ближайшего целого числа.
+                    </legend>
+    
+                    <div class="task__input">
+                        <input type="text">
+                        <input type="text">
+                        <button type="button" onclick="task_2()">click</button>
+                    </div>
+    
+                    <textarea class="task__result" name="" id="" cols="30" rows="10" disabled></textarea>
+                </div>
+                <div id="task_4" class="task">
+                    <legend class="task__condition">
+                        Запросить у пользователя два числа - вывести случайное целое число 
+                        в этом диапазоне.
+                    </legend>
+    
+                    <div class="task__input">
+                        <input type="text">
+                        <input type="text">
+                        <button type="button" onclick="task_3()">click</button>
+                    </div>
+    
+                    <textarea class="task__result" name="" id="" cols="30" rows="10" disabled></textarea>
+                </div>
+            </fieldset>
+            <h2 class="tasks__title">Работа со строками:</h2>
+            <fieldset>
+                <div id="task_5" class="task">
+                    <legend class="task__condition">
+                        Запросить  у пользователя две строки, найти сколько раз повторяется 
+                        вторая в первой. Вывести индексы всех вхождений.
+                    </legend>
+    
+                    <div class="task__input">
+                        <input type="text">
+                        <input type="text">
+                        <button type="button" onclick="task_4()">click</button>
+                    </div>
+    
+                    <textarea class="task__result" name="" id="" cols="30" rows="10" disabled></textarea>
+                </div>
+                <div id="task_6" class="task">
+                    <legend class="task__condition">
+                        Найти все численные значения в строке “ECMAScript 2015 (6th Edition, ECMA-262)”.
+                    </legend>
+    
+                    <textarea class="task__result" name="" id="" cols="30" rows="10" disabled></textarea>
+                </div>
+                <div id="task_7" class="task">
+                    <legend>
+                        Найти все символы в верхнем регистре ECMAScript 2015 (6th Edition, ECMA-262)”
+                    </legend>
+    
+                    <textarea class="task__result" name="" id="" cols="30" rows="10" disabled></textarea>
+                </div>
+                <div id="task_8" class="task">
+                    <legend class="task__condition">
+                        Написать несколько регулярных выражений применить в поиске по 
+                        <span>предложенному тексту</span>, можно скопировать отдельно в любой инструмент 
+                        на подобии https://regexr.com.
+                    </legend>
+
+                    <div class="task__input">
+                        <ul onchange="task_7(event)">
+                            <li>
+                                <input type="radio" name="radio" value="0" disabled>
+                                <label for="">Все значения цветов #HEX в HTML</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="radio" value="1" disabled>
+                                <label for="">Все вхождения номера телефона в стандартном виде</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="radio" value="2" disabled>
+                                <label for="">Все теги &lt;h1&gt; и замена их на &lt;h2&gt;</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="radio" value="3" disabled>
+                                <label for="">Все теги &lt;script&gt;&lt;/script&gt;</label>
+                            </li>
+                        </ul>
+
+                        <input name="file" type="file" onchange="readFile(event)">
+                    </div>
+    
+                    <textarea class="task__result" name="" id="" cols="30" rows="10" disabled></textarea>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>
