@@ -33,3 +33,21 @@ console.log(me === friend); // True,  сравнение ссылок на од�
 console.log(me === enemy);  // False, объект один, но сравниваются ссылки, которые отличаются
 
 
+function counter() {
+    let n = 0;
+
+    let count = function() { n++; };
+    let print = function() { console.log(n); }
+
+    let obj = new Function;
+    obj.bind(this);
+
+    return obj;
+}
+
+let c = counter();
+
+console.log(counter.count());
+
+c.count();
+c.this.print();
