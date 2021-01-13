@@ -4,10 +4,6 @@
     display: none;
 }
 
-.file--selected {
-    background-color: #aaa;
-}
-
 html, body {
     width: 100%;
     height: 100%;
@@ -39,6 +35,8 @@ html, body {
 
 .file-grid-controller-inner label {
     padding: 1rem;
+
+    transition: all .5s;
 }
 
 .file-grid-controller-inner label:hover, .file:hover {
@@ -48,7 +46,7 @@ html, body {
 #file-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    grid-template-rows: repeat(auto-fill, minmax(80px, 1fr));
+    grid-auto-rows: 1fr;
     grid-gap: 1rem;
 }
 
@@ -59,6 +57,10 @@ html, body {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
     background-color: #fff;
+}
+
+.file--ghost {
+    border: #ccc 3px dashed;
 }
 
 .file > * {

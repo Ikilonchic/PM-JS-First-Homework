@@ -111,6 +111,7 @@ const dragAndDropFile = (event) => {
 
     let currentWidth = dragedFile.clientWidth;
     let ghost = dragedFile.cloneNode(false);
+    ghost.classList.add('file--ghost');
 
     fileGrid.insertBefore(ghost, dragedFile);
     document.body.appendChild(dragedFile);
@@ -147,11 +148,12 @@ const dragAndDropFile = (event) => {
         }
 
         if (nearestFile != ghost) {
-            let temp_ghost = nearestFile.cloneNode(false);
-            fileGrid.insertBefore(temp_ghost, nearestFile);
+            let tempGhost = nearestFile.cloneNode(false);
+            tempGhost.classList.add('file--ghost');
+            fileGrid.insertBefore(tempGhost, nearestFile);
     
             fileGrid.replaceChild(nearestFile, ghost);
-            ghost = temp_ghost;
+            ghost = tempGhost;
         }
     }
   
