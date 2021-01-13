@@ -1,4 +1,5 @@
 const fileGrid = document.getElementById('file-grid');
+
 const controller = document.getElementById('file-grid-controller');
 const controllerBtn = controller.querySelectorAll('label');
 
@@ -64,7 +65,7 @@ const deleteFileHandler = (event) => {
     currentFile.remove();
 };
 
-const hideController = (event) => {
+const hideController = () => {
     controller.classList.add('block--hide');
     controllerBtn.forEach(btn => btn.classList.add('block--hide'));
 };
@@ -97,9 +98,77 @@ const selectCurrentFile = (event) => {
     }
 };
 
+const dragAndDropFile = (event) => {
+    event.preventDefault();
+
+    if(![...controllerBtn].includes(event.target)) {
+        hideController();
+    }
+    
+    if (!isFile(event.target) || event.button) return;
+
+    let dragedFile = event.target;
+
+    let currentWidth = dragedFile.clientWidth;
+    let ghost = dragedFile.cloneNode(false);
+
+    fileGrid.insertBefore(ghost, dragedFile);
+    document.body.appendChild(dragedFile);
+
+    dragedFile.style.width = currentWidth + 'px';
+    dragedFile.style.position = 'absolute';
+    dragedFile.style.zIndex = 1000;
+
+    moveAt(event);
+  
+    function moveAt(e) {
+        dragedFile.style.left = e.pageX - dragedFile.offsetWidth / 2 + 'px';
+        dragedFile.style.top = e.pageY - dragedFile.offsetHeight / 2 + 'px';
+    }
+  
+    document.onmousemove = function(e) {
+        moveAt(e);
+
+        if (!fileGrid.children.length) return; 
+
+        let minLength = 9999;
+        let nearestFile = ghost;
+
+        for (let i = 0; i < fileGrid.children.length; i++) {
+            let dx = fileGrid.children[i].offsetTop  + fileGrid.children[i].offsetWidth / 2 - (dragedFile.offsetTop + dragedFile.offsetWidth / 2);
+            let dy = fileGrid.children[i].offsetLeft + fileGrid.children[i].offsetHeight / 2 - (dragedFile.offsetLeft + dragedFile.offsetHeight / 2);
+            
+            let length = Math.sqrt(dx * dx + dy * dy);
+
+            if (length < minLength) {
+                minLength = length;
+                nearestFile = fileGrid.children[i];
+            }
+        }
+
+        if (nearestFile != ghost) {
+            let temp_ghost = nearestFile.cloneNode(false);
+            fileGrid.insertBefore(temp_ghost, nearestFile);
+    
+            fileGrid.replaceChild(nearestFile, ghost);
+            ghost = temp_ghost;
+        }
+    }
+  
+    document.onmouseup = function() {
+        dragedFile.removeAttribute('style');
+
+        fileGrid.replaceChild(dragedFile, ghost);
+
+        document.onmousemove = null;
+        document.onmouseup = null;
+    }
+};
+
 document.addEventListener('click', hideController);
 document.addEventListener('contextmenu', showController);
 document.addEventListener('contextmenu', selectCurrentFile);
+document.addEventListener('mousedown', dragAndDropFile);
 
 controllerBtn[0].getElementsByTagName('input')[0].addEventListener('change', createFileHandler);
 controllerBtn[1].getElementsByTagName('input')[0].addEventListener('click', renameFileHandler);
