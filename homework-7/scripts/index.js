@@ -5,7 +5,7 @@ const controllerBtn = controller.querySelectorAll('label');
 
 let currentFile = null;
 
-const setPosition = (element, x, y) => {
+const setNormalPosition = (element, x, y) => {
     if (x < document.documentElement.clientWidth / 2) {
         element.style.left = x + 'px';
         element.style.removeProperty('right');
@@ -83,7 +83,7 @@ const showController = (event) => {
         controllerBtn[2].classList.add('block--hide');
     }
 
-    setPosition(controller, event.clientX, event.clientY);
+    setNormalPosition(controller, event.clientX, event.clientY);
     
     controller.classList.remove('block--hide');
 };
@@ -98,7 +98,7 @@ const selectCurrentFile = (event) => {
     }
 };
 
-const dragAndDropFile = (event) => {
+const mouseDownHandler = (event) => {
     event.preventDefault();
 
     if(![...controllerBtn].includes(event.target)) {
@@ -170,7 +170,7 @@ const dragAndDropFile = (event) => {
 document.addEventListener('click', hideController);
 document.addEventListener('contextmenu', showController);
 document.addEventListener('contextmenu', selectCurrentFile);
-document.addEventListener('mousedown', dragAndDropFile);
+document.addEventListener('mousedown', mouseDownHandler);
 
 controllerBtn[0].getElementsByTagName('input')[0].addEventListener('change', createFileHandler);
 controllerBtn[1].getElementsByTagName('input')[0].addEventListener('click', renameFileHandler);
