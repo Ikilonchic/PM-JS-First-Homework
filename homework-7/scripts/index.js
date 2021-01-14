@@ -5,7 +5,12 @@ const controllerBtn = controller.querySelectorAll('label');
 
 let currentFile = null;
 
+function getBodyScrollTop() {
+    return self.pageYOffset || (document.documentElement && document.documentElement.scrollTop) || (document.body && document.body.scrollTop);
+}
+
 const setNormalPosition = (element, x, y) => {
+    console.log(document.documentElement.offsetHeight, y, getBodyScrollTop())
     if (x < document.documentElement.clientWidth / 2) {
         element.style.left = x + 'px';
         element.style.removeProperty('right');
@@ -15,10 +20,10 @@ const setNormalPosition = (element, x, y) => {
     }
     
     if (y < document.documentElement.clientHeight / 2) {
-        element.style.top = y + 'px';
+        element.style.top = y + getBodyScrollTop() + 'px';
         element.style.removeProperty('bottom');
     } else {
-        element.style.bottom = document.documentElement.clientHeight - y + 'px';
+        element.style.bottom = document.documentElement.clientHeight - getBodyScrollTop() - y + 'px';
         element.style.removeProperty('top');
     }
 };
@@ -107,6 +112,7 @@ const showController = (event) => {
         controllerBtn[2].classList.add('block--hide');
     }
 
+    console.log(event);
     setNormalPosition(controller, event.clientX, event.clientY);
     
     controller.classList.remove('block--hide');
