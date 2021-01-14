@@ -27,13 +27,35 @@ const isFile = (element) => {
     return element.classList ? element.classList.contains('file') : false;
 };
 
+const selectCurrentFile = (event) => {
+    event.preventDefault();
+
+    if (isFile(event.target)) {
+        currentFile = event.target;
+    } else {
+        currentFile = null;
+    }
+};
+
+const getReadableFileSizeString = (fileSizeInBytes) => {
+    let i = 0;
+    let byteUnits = [' B', ' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+    
+    while (fileSizeInBytes > 1000) {
+        fileSizeInBytes = fileSizeInBytes / 1000;
+        i++;
+    }
+
+    return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+};
+
 const createFile = (name, size) => {
     return `<div class="file">
                 <div class="file__name" title="${name}">
                     ${name}
                 </div>
                 <div class="file__size">
-                    ${size}b
+                    ${getReadableFileSizeString(size)}
                 </div>
             </div>`;
 };
@@ -65,6 +87,8 @@ const deleteFileHandler = (event) => {
     currentFile.remove();
 };
 
+const isController = (element) => [...controllerBtn].includes(element);
+
 const hideController = () => {
     controller.classList.add('block--hide');
     controllerBtn.forEach(btn => btn.classList.add('block--hide'));
@@ -88,20 +112,10 @@ const showController = (event) => {
     controller.classList.remove('block--hide');
 };
 
-const selectCurrentFile = (event) => {
-    event.preventDefault();
-
-    if (isFile(event.target)) {
-        currentFile = event.target;
-    } else {
-        currentFile = null;
-    }
-};
-
 const mouseDownHandler = (event) => {
     event.preventDefault();
 
-    if(![...controllerBtn].includes(event.target)) {
+    if(!isController(event.target)) {
         hideController();
     }
     
@@ -170,6 +184,7 @@ const mouseDownHandler = (event) => {
 document.addEventListener('click', hideController);
 document.addEventListener('contextmenu', showController);
 document.addEventListener('contextmenu', selectCurrentFile);
+
 document.addEventListener('mousedown', mouseDownHandler);
 
 controllerBtn[0].getElementsByTagName('input')[0].addEventListener('change', createFileHandler);
