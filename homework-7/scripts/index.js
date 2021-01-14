@@ -10,7 +10,6 @@ function getBodyScrollTop() {
 }
 
 const setNormalPosition = (element, x, y) => {
-    console.log(document.documentElement.offsetHeight, y, getBodyScrollTop())
     if (x < document.documentElement.clientWidth / 2) {
         element.style.left = x + 'px';
         element.style.removeProperty('right');
@@ -55,12 +54,13 @@ const getReadableFileSizeString = (fileSizeInBytes) => {
 };
 
 const createFile = (name, size) => {
-    return `<div class="file">
-                <div class="file__name" title="${name}">
+    let readebleFileSize = getReadableFileSizeString(size)
+    return `<div class="file" title="${name}, ${readebleFileSize}">
+                <div class="file__name">
                     ${name}
                 </div>
                 <div class="file__size">
-                    ${getReadableFileSizeString(size)}
+                    ${readebleFileSize}
                 </div>
             </div>`;
 };
@@ -112,7 +112,6 @@ const showController = (event) => {
         controllerBtn[2].classList.add('block--hide');
     }
 
-    console.log(event);
     setNormalPosition(controller, event.clientX, event.clientY);
     
     controller.classList.remove('block--hide');

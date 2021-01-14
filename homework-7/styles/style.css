@@ -8,6 +8,7 @@
     width: 100%;
     font-family: 'Roboto', sans-serif;
     padding: 1rem;
+    overflow-x: hidden;
 }
 
 #file-grid-controller {
