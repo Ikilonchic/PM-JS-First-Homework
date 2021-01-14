@@ -53,7 +53,7 @@ const getReadableFileSizeString = (fileSizeInBytes) => {
     return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
 };
 
-const createFile = (name, size) => {
+const buildFileView = (name, size) => {
     let readebleFileSize = getReadableFileSizeString(size)
     return `<div class="file" title="${name}, ${readebleFileSize}">
                 <div class="file__name">
@@ -69,13 +69,12 @@ const createFileHandler = (event) => {
     let files = controllerBtn[0].getElementsByTagName('input')[0].files;
 
     for (let i = 0; i < files.length; i++) {
-        fileGrid.innerHTML += createFile(files[i].name, files[i].size);
+        fileGrid.innerHTML += buildFileView(files[i].name, files[i].size);
     }
 };
 
 const renameFileHandler = (event) => {
     let fileName = currentFile.querySelector('.file__name');
-
     let newName = prompt('Enter new file name:', fileName.innerText);
 
     if (newName === '') {
@@ -87,9 +86,7 @@ const renameFileHandler = (event) => {
 };
 
 const deleteFileHandler = (event) => {
-    if (!currentFile) return;
-
-    currentFile.remove();
+    if (currentFile) currentFile.remove();
 };
 
 const isController = (element) => [...controllerBtn].includes(element);
@@ -129,33 +126,32 @@ const mouseDownHandler = (event) => {
     let dragedFile = event.target;
 
     let currentWidth = dragedFile.clientWidth;
-    let ghost = dragedFile.cloneNode(false);
-    ghost.classList.add('file--ghost');
+    let ghostFile = dragedFile.cloneNode(false);
 
-    fileGrid.insertBefore(ghost, dragedFile);
+    ghostFile.classList.add('file--ghost');
+
+    fileGrid.insertBefore(ghostFile, dragedFile);
     document.body.appendChild(dragedFile);
 
     dragedFile.style.width = currentWidth + 'px';
-    dragedFile.style.position = 'absolute';
+    dragedFile.style.position = 'fixed';
     dragedFile.style.zIndex = 1000;
-
-    moveAt(event);
   
-    function moveAt(e) {
-        dragedFile.style.left = e.pageX - dragedFile.offsetWidth / 2 + 'px';
-        dragedFile.style.top = e.pageY - dragedFile.offsetHeight / 2 + 'px';
+    const moveAt = (e) => {
+        dragedFile.style.left = e.clientX - dragedFile.offsetWidth / 2 + 'px';
+        dragedFile.style.top = e.clientY - dragedFile.offsetHeight / 2 + 'px';
     }
   
-    document.onmousemove = function(e) {
+    const onMoveHandler = (e) => {
         moveAt(e);
 
-        if (!fileGrid.children.length) return; 
+        if (!fileGrid.children.length) return;
 
         let minLength = 9999;
-        let nearestFile = ghost;
+        let nearestFile = ghostFile;
 
         for (let i = 0; i < fileGrid.children.length; i++) {
-            let dx = fileGrid.children[i].offsetTop  + fileGrid.children[i].offsetWidth / 2 - (dragedFile.offsetTop + dragedFile.offsetWidth / 2);
+            let dx = fileGrid.children[i].offsetTop  + fileGrid.children[i].offsetWidth / 2 - (dragedFile.offsetTop + getBodyScrollTop() + dragedFile.offsetWidth / 2);
             let dy = fileGrid.children[i].offsetLeft + fileGrid.children[i].offsetHeight / 2 - (dragedFile.offsetLeft + dragedFile.offsetHeight / 2);
             
             let length = Math.sqrt(dx * dx + dy * dy);
@@ -166,24 +162,31 @@ const mouseDownHandler = (event) => {
             }
         }
 
-        if (nearestFile != ghost) {
+        if (nearestFile != ghostFile) {
             let tempGhost = nearestFile.cloneNode(false);
             tempGhost.classList.add('file--ghost');
             fileGrid.insertBefore(tempGhost, nearestFile);
     
-            fileGrid.replaceChild(nearestFile, ghost);
-            ghost = tempGhost;
+            fileGrid.replaceChild(nearestFile, ghostFile);
+            ghostFile = tempGhost;
         }
-    }
-  
-    document.onmouseup = function() {
+    };
+
+    const onMouseUpHandler = () => {
         dragedFile.removeAttribute('style');
 
-        fileGrid.replaceChild(dragedFile, ghost);
+        fileGrid.replaceChild(dragedFile, ghostFile);
 
+        document.onscroll = null;
         document.onmousemove = null;
         document.onmouseup = null;
     }
+
+    moveAt(event);
+
+    document.onmousemove = onMoveHandler;
+    document.onscroll = onMoveHandler;
+    document.onmouseup = onMouseUpHandler;
 };
 
 document.addEventListener('click', hideController);
