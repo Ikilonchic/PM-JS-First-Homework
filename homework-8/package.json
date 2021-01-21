@@ -1,0 +1,13 @@
+{
+  "name": "homework-8",
+  "version": "1.0.0",
+  "description": "PM Academy 8th homework",
+  "scripts": {
+    "test": "node 1.js && node 2.js && node 3.js && node 4.js"
+  },
+  "keywords": [
+    "PM", "JS", "Academy"
+  ],
+  "author": "Nikita Kuts <ikilonchic@gmail.com>",
+  "license": "ISC"
+}
