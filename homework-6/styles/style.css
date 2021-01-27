@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&display=swap');
+
+body {
+    background: #D6FFF6;
+
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+
+    margin: 0;
+
+    box-shadow: 0px 10px 40px -10px rgba(0,0,0,0.66);
+}
+
+.container::after {
+    position: absolute;
+    content: " ";
+    
+    top: 0;
+    left: 0;
+    
+    width: 100%;
+    height: 100%;
+    
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.container__title {
+    padding: 5%;
+
+    background: #231651;
+
+    font-size: 1.7em;
+    font-weight: bold;
+    color: #D6FFF6;
+}
+
+.container__inner {
+    padding: 5%;
+}
+
+.container__inner > * {
+    margin-bottom: 2rem;
+}
+
+.container__inner .tasks__block > *, 
+.container__inner .tasks__block > * > *,
+.task__input > * {
+    margin-bottom: 1rem;
+}
+
+.container__inner > *:last-child, 
+.container__inner .tasks__block > *:last-child,
+.container__inner .tasks__block > * > *:last-child,
+.task__input > *:last-child {
+    margin-bottom: 0;
+}
+
+.tasks__title {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+.task__description {
+    margin-top: 2rem;
+
+    text-align: justify;
+}
+
+.task__input {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+.task__input label {
+    margin-top: 1rem;
+}
+
+.task__input > button {
+    width: 25%;
+
+    margin: 1rem auto 0;
+    padding: 0.5rem;
+
+    background: #231651;
+    color: #D6FFF6;
+}
+
+.task__input > input {
+    padding: 0.5rem;
+}
+
+.task__output {
+    width: 100%;
+
+    padding: 1rem;
+
+    overflow-y: scroll;
+    resize: none;
+}
+
+@media only screen and (min-width: 530px) {
+
+    .task__input > input {
+        flex-grow: 1;
+
+        margin-bottom: 0;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    .container {
+        width: 725px;
+
+        margin: 1em auto;
+
+        border-radius: 2em;
+    }
+
+    .container::after {
+        box-shadow: inset 0px 0px 0px 2px #231651;
+    }
+
+    .container__title {
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+    }
+}
