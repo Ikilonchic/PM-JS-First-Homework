@@ -1,0 +1,19 @@
+{
+  "name": "homework-9",
+  "version": "1.0.0",
+  "description": "PM Academy 9th homework",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [
+    "PM",
+    "JS",
+    "Academy"
+  ],
+  "author": "Nikita Kuts <ikilonchic@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
