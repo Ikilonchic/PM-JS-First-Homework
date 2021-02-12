@@ -27,14 +27,15 @@
 
     &__login {
         font-size: 2em;
-
+        
         a {
             color: black;
         }
     }
-
+    
     &__data .top {
         margin-bottom: .5em;
+        overflow-y: hidden;
     }
 
     &__data .buttom {
