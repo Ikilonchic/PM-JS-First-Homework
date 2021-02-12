@@ -1,0 +1,35 @@
+.user-search {
+    display: flex;
+    flex-direction: column;
+
+    width: 80%;
+    margin: 1rem auto;
+
+    &__top, &__input {
+        width: 100%;
+    }
+
+    &__input {
+        margin-bottom: 1rem;
+        padding: 0.5em;
+
+        font-size: 1.2em;
+    }
+
+    &__buttom {
+        display: grid;
+        grid-template-rows: 1fr;
+    }
+
+    @media only screen and (min-width: 750px) {
+        width: 750px;
+
+        &__buttom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr;
+
+            grid-gap: 1rem;
+        }
+    }
+}
