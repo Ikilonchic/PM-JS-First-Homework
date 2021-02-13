@@ -28,56 +28,38 @@ export default class UserSearch {
     }
 
     async findUser(userName) {
-        return UserService.getUser(userName)
-            .then(user => {
-                this.currentUser = user;
-            });
+        this.currentUser = await UserService.getUser(userName);
     }
 
     async findUserRepos(userName) {
-        return UserService.getUserRepos(userName)
-            .then(repos => {
-                if (repos) {
-                    this.reposList.itemArr = repos;
-                }
-            });
+        const repos = await UserService.getUserRepos(userName);
+        if (repos) {
+            this.reposList.itemArr = repos;
+        }
     }
 
     async findUserFollowers(userName) {
-        return UserService.getUserFollowers(userName)
-            .then(followers => {
-                if (followers) {
-                    this.followersList.itemArr = followers;
-                }
-            });
+        const followers = await UserService.getUserFollowers(userName);
+        if (followers) {
+            this.followersList.itemArr = followers;
+        }
     }
 
-    update(newUserName) {
-        this.findUser(newUserName)
-            .then(() => {
-                this.userProfile.currentUser = this.currentUser;
-                this.userProfile.render();
-            })
-            .then(() => {
-                if (this.currentUser) {
-                    this.findUserRepos(this.currentUser.login)
-                        .then(() => {
-                            this.reposList.render();
-                        });
-                    this.findUserFollowers(this.currentUser.login)
-                        .then(() => {
-                            this.followersList.render();
-                        });
+    async update(newUserName) {
+        await this.findUser(newUserName);
 
-                    User.save(this.currentUser);
-                } else {
-                    this.reposList.itemArr = null;
-                    this.followersList.itemArr = null;
+        if (!this.currentUser) return this.clear();
 
-                    this.reposList.render();
-                    this.followersList.render();
-                }
-            });
+        this.userProfile.currentUser = this.currentUser;
+        this.userProfile.render();
+
+        await this.findUserRepos(this.currentUser.login)
+        this.reposList.render();
+
+        await this.findUserFollowers(this.currentUser.login)
+        this.followersList.render();
+
+        User.save(this.currentUser);
     }
 
     clear() {
@@ -137,7 +119,7 @@ export default class UserSearch {
             } else {
                 this.clear();
             }
-        }, 1000)
+        }, 500)
 
         this.searchInput.addEventListener('input', searchHandler);
     }
