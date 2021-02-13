@@ -7,10 +7,8 @@ export default class DOMService {
         return document.getElementById(id);
     }
 
-    static createElement(element, view) {
-        let wrapElement = document.createElement('div')
-        wrapElement.innerHTML = view(element);
-        return wrapElement.firstChild;
+    static createElement(element) {
+        return document.createElement(element);
     }
     
     static replaceElement(newElement, oldElement) {

@@ -37,6 +37,7 @@ export default class ItemList {
         }
 
         return (this.itemArr && this.itemArr.length && 
-            `<div class="item-list__title">${this.title}</div>${buildListView(this.itemArr)}`) || '';
+            `<div class="item-list__title">${this.title}</div>
+            <div class="item-list__container">${buildListView(this.itemArr)}</div>`) || '';
     }
 };

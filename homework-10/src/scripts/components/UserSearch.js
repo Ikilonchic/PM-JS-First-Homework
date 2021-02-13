@@ -74,6 +74,7 @@ export default class UserSearch {
 
     render() {
         if (DOMService.isElementExistById(this.rootElement.id)) {
+            // Bad practices, but it's only for study project
             this.rootElement.innerHTML = this.buildView();
         }
 
